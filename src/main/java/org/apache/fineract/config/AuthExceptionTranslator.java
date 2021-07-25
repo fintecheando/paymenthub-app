@@ -8,13 +8,16 @@ import org.springframework.security.oauth2.provider.error.WebResponseExceptionTr
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component
 public class AuthExceptionTranslator implements WebResponseExceptionTranslator {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public ResponseEntity translate(Exception e) {
+        logger.info(e.getMessage());
         if (e instanceof InvalidGrantException) {
             JSONObject body = new JSONObject();
             body.put("timestamp", new Date().toInstant().toEpochMilli());
